@@ -1,5 +1,5 @@
 import { Contact, IContact } from "../models/contactModel";
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
 
 import { ConvoService } from "./conversation.service";
 import { UserChatRelationService } from "./UserChatRelation.service";

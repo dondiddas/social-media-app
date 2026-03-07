@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import { ModalTypes } from "../../../types/modalTypes";
 import "./DeleteConfirmation.css";
 

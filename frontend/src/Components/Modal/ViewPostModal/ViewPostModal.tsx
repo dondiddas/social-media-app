@@ -253,12 +253,9 @@ const ViewPostModal: React.FC<PostModal> = ({ showModal, onClose, postId }) => {
                         {postData.content}
                       </div>
                     )}
-                    {postData.image && (
+                    {postData.image && typeof postData.image === "string" && (
                       <div className="post-modal-image-container">
-                        <img
-                          src={postData.image}
-                          alt=""
-                        />
+                        <img src={postData.image} alt="" />
                       </div>
                     )}
                     <div className="post-modal-counter">

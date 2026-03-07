@@ -1,5 +1,5 @@
-import mongoose, { ObjectId, Types } from "mongoose";
-import CommentModel, { IComment } from "../models/commentModel";
+// import mongoose, { ObjectId, Types } from "mongoose";
+import CommentModel from "../models/commentModel";
 import { errorLog } from "./errHandler";
 import { notificationQueue } from "../queues/notification/notificationQueue";
 import { commentQueue } from "../queues/post/commentQueue";

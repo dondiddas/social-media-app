@@ -1,6 +1,6 @@
-import jwt from "jsonwebtoken";
-import UserModel, { IUser } from "../models/userModel";
-import { errThrower } from "./errHandler";
+// import jwt from "jsonwebtoken";
+import UserModel from "../models/userModel";
+// import { errThrower } from "./errHandler";
 
 export const userService = {
   createToken: (userId: string) => {

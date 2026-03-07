@@ -7,18 +7,13 @@ import { FetchedUserType } from "../../../types/user";
 import { AppDispatch } from "../../../store/store";
 import { useSocket } from "../../../hooks/socket/useSocket";
 
+
 import { useCurrentUser, useUserById } from "../../../hooks/useUsers";
 import { updateFollow } from "../../users/userSlice";
-import {
-  openPostModal,
-  viewProfile,
-} from "../../../Components/Modal/globalSlice";
+import { openPostModal, viewProfile } from "../../../Components/Modal/globalSlice";
 import { useNavigate } from "react-router";
 import { usePopoverContext } from "../../../hooks/usePopover";
-import {
-  FollowPayloadToast,
-  useToastEffect,
-} from "../../../hooks/toast/useToastEffect";
+import { FollowPayloadToast, useToastEffect } from "../../../hooks/toast/useToastEffect";
 import { userProfile } from "../../../utils/ImageUrlHelper";
 
 interface Post {
@@ -28,7 +23,7 @@ interface Post {
 const Post = ({ post }: Post) => {
   const { currentUser } = useCurrentUser();
   const { popover } = usePopoverContext();
-  const { emitLike, emitFollow } = useSocket();
+  const { emitFollow } = useSocket();
   const { handleFollowEffect } = useToastEffect();
   const navigate = useNavigate();
 
@@ -221,12 +216,9 @@ const Post = ({ post }: Post) => {
           </div>
         </div>
         <div className="post-content">{post.content}</div>
-        {post.image && (
+        {post.image && typeof post.image === "string" && (
           <div className="image-container" onClick={toggleComments}>
-            <img
-              src={post.image}
-              alt=""
-            />
+            <img src={post.image as string} alt="" />
           </div>
         )}
         {/* // Make the word plural if there more than one like/comment */}

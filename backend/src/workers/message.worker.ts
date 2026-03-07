@@ -1,11 +1,11 @@
 // workers/message.worker.ts
-import { IConnection, Job, Worker, ConnectionOptions } from "bullmq";
+import { Job, Worker, ConnectionOptions } from "bullmq";
 import mongoose from "mongoose";
-import { IMessage, MessageModel } from "../models/messageModel";
-import { Conversation, IConversation } from "../models/conversationModel";
+import { MessageModel } from "../models/messageModel";
+import { Conversation } from "../models/conversationModel";
 import "dotenv/config";
 // import Redis from "ioredis";
-import { IMessageInput } from "../utils/buildMessagePayload";
+// import { IMessageInput } from "../utils/buildMessagePayload";
 import { connectDb } from "../config/db";
 import { emitMessageOnSend } from "../events/emitters";
 import { redisOptions } from "../queues/redisOption";

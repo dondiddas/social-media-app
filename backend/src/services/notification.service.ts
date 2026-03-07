@@ -1,8 +1,8 @@
-import mongoose, { Types } from "mongoose";
-import { NotifData } from "../controllers/notifController";
-import notificationModel, { INotification } from "../models/notificationModel";
-import { UserData } from "./comment.service";
-import { errThrower } from "./errHandler";
+// import mongoose, { Types } from "mongoose";
+// import { NotifData } from "../controllers/notifController";
+import notificationModel from "../models/notificationModel";
+// import { UserData } from "./comment.service";
+// import { errThrower } from "./errHandler";
 
 interface CommentPayload {
   receiver: string;
