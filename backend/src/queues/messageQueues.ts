@@ -1,8 +1,8 @@
-import { Queue } from "bullmq";
-import { RedisOptions } from "ioredis";
+
+import { Queue, ConnectionOptions } from "bullmq";
 import { redisOptions } from "./redisOption";
 
 export const messageQueue = new Queue("messageQueue", {
-  connection: redisOptions as string | RedisOptions,
+  connection: redisOptions,
 });
 // use the redis instance connection in queue(bullmq). with this bullmq will be connected to the redis running port

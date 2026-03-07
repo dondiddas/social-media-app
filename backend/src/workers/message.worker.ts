@@ -1,10 +1,10 @@
 // workers/message.worker.ts
-import { IConnection, Job, Worker } from "bullmq";
+import { IConnection, Job, Worker, ConnectionOptions } from "bullmq";
 import mongoose from "mongoose";
 import { IMessage, MessageModel } from "../models/messageModel";
 import { Conversation, IConversation } from "../models/conversationModel";
 import "dotenv/config";
-import Redis from "ioredis";
+// import Redis from "ioredis";
 import { IMessageInput } from "../utils/buildMessagePayload";
 import { connectDb } from "../config/db";
 import { emitMessageOnSend } from "../events/emitters";
@@ -70,7 +70,7 @@ async function processJob(job: Job) {
 
 // Create worker instance
 const messageWorker = new Worker(QUEUE_NAME, processJob, {
-      connection: redisOptions as string | RedisOptions,
+  connection: redisOptions,
   concurrency: 10, // Process 10 jobs simultaneously
   limiter: {
     max: 100, // Max 100 jobs per duration

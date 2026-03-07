@@ -1,10 +1,18 @@
 // events/redisEvents.ts
 import Redis from "ioredis";
-import { redisOptions } from "../queues/redisOption";
+// Do not import BullMQ's redisOptions; define ioredis options here
 
 // Create separate Redis connections for pub/sub
-const publisher = new Redis(redisOptions as string | RedisOptions);
-const subscriber = new Redis(redisOptions as string | RedisOptions);
+const redisConfig = process.env.REDIS_URL
+  ? { url: process.env.REDIS_URL }
+  : {
+      host: process.env.REDIS_HOST || "redis",
+      port: process.env.REDIS_PORT ? Number(process.env.REDIS_PORT) : 6379,
+      password: process.env.REDIS_PASSWORD || undefined,
+      maxRetriesPerRequest: null,
+    };
+const publisher = new Redis(redisConfig);
+const subscriber = new Redis(redisConfig);
 
 export class RedisEventEmitter {
   private subscriber: Redis;
