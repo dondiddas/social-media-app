@@ -1,6 +1,6 @@
-import { Queue } from "bullmq";
+import { Queue, ConnectionOptions } from "bullmq";
 import { redisOptions } from "./redisOption";
 
-// queues/socketQueue.ts
-  connection: redisOptions as string | RedisOptions,
+export const socketQueue = new Queue("socketQueue", {
+  connection: redisOptions as ConnectionOptions,
 });
