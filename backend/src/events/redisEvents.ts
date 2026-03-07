@@ -1,19 +1,32 @@
-// events/redisEvents.ts
-import Redis from "ioredis";
-// Do not import BullMQ's redisOptions; define ioredis options here
+import Redis, { RedisOptions } from "ioredis";
 
-// Create separate Redis connections for pub/sub
-const redisConfig = process.env.REDIS_URL
-  ? { url: process.env.REDIS_URL, maxRetriesPerRequest: null, family: 4 }
-  : {
-      host: process.env.REDIS_HOST || "redis",
-      port: process.env.REDIS_PORT ? Number(process.env.REDIS_PORT) : 6379,
+// 1. Define common options (required for BullMQ compatibility)
+const commonOptions: RedisOptions = {
+  maxRetriesPerRequest: null,
+  family: 4, // Forces IPv4, helping with Cloud provider connectivity
+};
+
+// 2. Initialize connections using the URL string directly if it exists
+const REDIS_URL = process.env.REDIS_URL;
+
+const publisher = REDIS_URL 
+  ? new Redis(REDIS_URL, commonOptions) 
+  : new Redis({
+      host: process.env.REDIS_HOST || "localhost",
+      port: Number(process.env.REDIS_PORT) || 6379,
       password: process.env.REDIS_PASSWORD || undefined,
-      maxRetriesPerRequest: null,
-      family: 4,
-    };
-const publisher = new Redis(redisConfig);
-const subscriber = new Redis(redisConfig);
+      ...commonOptions,
+    });
+
+const subscriber = REDIS_URL 
+  ? new Redis(REDIS_URL, commonOptions) 
+  : new Redis({
+      host: process.env.REDIS_HOST || "localhost",
+      port: Number(process.env.REDIS_PORT) || 6379,
+      password: process.env.REDIS_PASSWORD || undefined,
+      ...commonOptions,
+    });
+
 
 export class RedisEventEmitter {
   private subscriber: Redis;
