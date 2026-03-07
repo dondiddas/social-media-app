@@ -83,8 +83,12 @@ export class SocketServer {
     this.io = new Server(httpServer, {
       // Create the server instance bound to node.js server module
       cors: {
-        origin: "http://localhost:5174",
+        origin: [
+          "http://localhost:5174",
+          "https://social-media-app-lls8.vercel.app"
+        ],
         methods: ["GET", "POST"], // allowed methods
+        credentials: true,
       },
 
       pingTimeout: 60000, // Close connection if client doesn't respond to ping within 60s
