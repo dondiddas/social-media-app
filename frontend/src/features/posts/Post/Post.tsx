@@ -216,9 +216,13 @@ const Post = ({ post }: Post) => {
           </div>
         </div>
         <div className="post-content">{post.content}</div>
-        {post.image && typeof post.image === "string" && (
+        {post.image && (
           <div className="image-container" onClick={toggleComments}>
-            <img src={post.image as string} alt="" />
+            {typeof post.image === "string"
+              ? <img src={post.image} alt="" />
+              : post.image instanceof File
+              ? <img src={URL.createObjectURL(post.image)} alt="" />
+              : null}
           </div>
         )}
         {/* // Make the word plural if there more than one like/comment */}

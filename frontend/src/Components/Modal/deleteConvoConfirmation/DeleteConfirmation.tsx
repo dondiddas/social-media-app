@@ -26,7 +26,7 @@ const DeleteConfirmation: React.FC<ModalTypes> = ({ showModal, onClose }) => {
             <br />
           </div>
           <div className="modal-footer">
-            <span onClick={}>Yes</span>
+            <span /* TODO: Add delete handler */>Yes</span>
 
             <span onClick={() => onClose()}>No</span>
           </div>

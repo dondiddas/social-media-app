@@ -1,14 +1,8 @@
 import "./Viewpost.css";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store/store";
-import {
-  fetchPost,
-  increamentComment,
-  postLiked,
-  toggleLike,
-} from "../postSlice";
-import { usePostById } from "../../../hooks/usePost";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../store/store";
+import { fetchPost, increamentComment, toggleLike } from "../postSlice";
 import Spinner from "../../../Components/Spinner/Spinner";
 import { useCurrentUser } from "../../../hooks/useUsers";
 import { useSocket } from "../../../hooks/socket/useSocket";
@@ -227,10 +221,11 @@ const ViewPost = ({ postId }: Post) => {
             <div className="post-content">{postData.content}</div>
             {postData.image && (
               <div className="image-container">
-                <img
-                  src={postData.image}
-                  alt=""
-                />
+                {typeof postData.image === "string"
+                  ? <img src={postData.image as string} alt="" />
+                  : postData.image instanceof File
+                  ? <img src={URL.createObjectURL(postData.image)} alt="" />
+                  : null}
               </div>
             )}
             {/* // Make the word plural if there more than one like/comment */}

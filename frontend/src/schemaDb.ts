@@ -1,11 +1,12 @@
 
 const mongoose = require("mongoose");
 
+
 const postSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // Post author
-  content: { type: String, required: true }, // Text of the post
-  image: { type: String, default: "" }, // Optional image in the post
-  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // Users who liked the post
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  content: { type: String, required: true },
+  image: { type: String, default: "" },
+  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   comments: [
     {
       user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
@@ -19,19 +20,17 @@ const postSchema = new mongoose.Schema({
 module.exports = mongoose.model("Post", postSchema);
 
 
-const mongoose = require("mongoose");
-
 const notificationSchema = new mongoose.Schema({
-  receiver: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // Notification recipient
-  sender: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // Notification sender
-  type: { 
-    type: String, 
-    enum: ["like", "comment", "follow"], 
-    required: true 
-  }, // Type of notification
-  post: { type: mongoose.Schema.Types.ObjectId, ref: "Post" }, // Optional, for post-related notifications
-  message: { type: String }, // Optional message
-  read: { type: Boolean, default: false }, // Whether the notification has been read
+  receiver: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  sender: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  type: {
+    type: String,
+    enum: ["like", "comment", "follow"],
+    required: true,
+  },
+  post: { type: mongoose.Schema.Types.ObjectId, ref: "Post" },
+  message: { type: String },
+  read: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
 });
 
