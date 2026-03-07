@@ -4,7 +4,7 @@ import Redis from "ioredis";
 
 // Create separate Redis connections for pub/sub
 const redisConfig = process.env.REDIS_URL
-  ? { url: process.env.REDIS_URL }
+  ? { url: process.env.REDIS_URL, maxRetriesPerRequest: null }
   : {
       host: process.env.REDIS_HOST || "redis",
       port: process.env.REDIS_PORT ? Number(process.env.REDIS_PORT) : 6379,

@@ -3,7 +3,7 @@
 import { ConnectionOptions } from "bullmq";
 
 export const redisOptions: ConnectionOptions = process.env.REDIS_URL
-  ? { url: process.env.REDIS_URL }
+  ? { url: process.env.REDIS_URL, maxRetriesPerRequest: null }
   : {
       host: process.env.REDIS_HOST || "redis",
       port: process.env.REDIS_PORT ? Number(process.env.REDIS_PORT) : 6379,
