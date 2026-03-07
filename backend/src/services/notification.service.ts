@@ -1,5 +1,7 @@
-// import mongoose, { Types } from "mongoose";
-// import { NotifData } from "../controllers/notifController";
+import mongoose, { Types } from "mongoose";
+import { NotifData } from "../controllers/notifController";
+import { errThrower } from "./errHandler";
+import { INotification } from "../models/notificationModel";
 import notificationModel from "../models/notificationModel";
 // import { UserData } from "./comment.service";
 // import { errThrower } from "./errHandler";

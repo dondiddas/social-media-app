@@ -1,15 +1,10 @@
-// import { ReqAuth } from "../controllers/messageController";
-
-// import { IConversation } from "../models/conversationModel";
-import { MessageModel } from "../models/messageModel";
-// import { messageHanlder } from "../server";
-// import {
-//   builtMessagePayloadBasedOnRecipeintStatus,
-//   IMessageInput,
-// } from "../utils/buildMessagePayload";
+import mongoose from "mongoose";
+import { ReqAuth } from "../controllers/messageController";
+import { IMessage, MessageModel } from "../models/messageModel";
+import { messageHanlder } from "../server";
+import { builtMessagePayloadBasedOnRecipeintStatus, IMessageInput } from "../utils/buildMessagePayload";
 import { ConvoService } from "./conversation.service";
-
-// import { UserChatRelationService } from "./UserChatRelation.service";
+import { UserChatRelationService } from "./UserChatRelation.service";
 export const messageService = {
   createMessageAndUpdateConvo: async (
     messageData: IMessageInput,

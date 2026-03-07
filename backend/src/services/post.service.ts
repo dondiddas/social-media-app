@@ -1,9 +1,9 @@
 import "../models/userModel";
-// import mongoose, { ClientSession, ObjectId } from "mongoose";
-// import { ExtentRequest } from "../controllers/postController";
 import postModel from "../models/postModel";
 import { errorLog } from "./errHandler";
-// import { IUser } from "../models/userModel";
+import mongoose, { ClientSession, ObjectId } from "mongoose";
+import { ExtentRequest } from "../controllers/postController";
+import { IUser } from "../models/userModel";
 
 export const postService = {
   createPost: async (payload: {

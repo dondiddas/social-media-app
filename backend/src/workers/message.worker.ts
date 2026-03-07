@@ -1,6 +1,8 @@
 // workers/message.worker.ts
 import { Job, Worker, ConnectionOptions } from "bullmq";
 import mongoose from "mongoose";
+import { IMessageInput } from "../utils/buildMessagePayload";
+import { IConversation } from "../models/conversationModel";
 import { MessageModel } from "../models/messageModel";
 import { Conversation } from "../models/conversationModel";
 import "dotenv/config";

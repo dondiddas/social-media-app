@@ -4,6 +4,7 @@ import { redisOptions } from "../queues/redisOption";
 import { connectDb } from "../config/db";
 import "dotenv/config";
 import mongoose from "mongoose";
+import { INotification } from "../models/notificationModel";
 import { emitPostLiked } from "../events/emitters";
 import { notifService } from "../services/notification.service";
 import { INotification } from "../models/notificationModel";
