@@ -21,17 +21,22 @@ interface ExtendReq extends Request {
 export const register = async (req: Request, res: Response): Promise<any> => {
   const { username, fullName, email, password } = req.body;
   try {
-    // mongoose query using "or" operator for email, usernames
-    const existingUser = await UserModel.findOne({
-      $or: [{ email }, { username }],
-    });
-
-    if (existingUser) {
-      return res.json({
-        success: false,
-        message: "User with this email or username already exists",
-      });
-    }
+      // Check for existing username
+      const existingUser = await UserModel.findOne({ username });
+      if (existingUser) {
+        return res.status(400).json({
+          success: false,
+          message: "Username already taken",
+        });
+      }
+      // Check for existing email
+      const existingEmail = await UserModel.findOne({ email });
+      if (existingEmail) {
+        return res.status(400).json({
+          success: false,
+          message: "Email already registered",
+        });
+      }
 
     if (!validator.isEmail(email)) {
       return res.json({
@@ -72,7 +77,23 @@ export const register = async (req: Request, res: Response): Promise<any> => {
       newUser.profilePicture = fileName;
     }
 
-    await newUser.save();
+      try {
+        await newUser.save();
+      } catch (err: any) {
+        if (err.code === 11000 && err.keyPattern && err.keyPattern.username) {
+          return res.status(400).json({
+            success: false,
+            message: "Username already taken",
+          });
+        }
+        if (err.code === 11000 && err.keyPattern && err.keyPattern.email) {
+          return res.status(400).json({
+            success: false,
+            message: "Email already registered",
+          });
+        }
+        return res.status(500).json({ success: false, message: "Registration failed" });
+      }
 
     // Generate token
     const token = userService.createToken(userId);
