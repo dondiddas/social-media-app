@@ -4,12 +4,13 @@ import Redis from "ioredis";
 
 // Create separate Redis connections for pub/sub
 const redisConfig = process.env.REDIS_URL
-  ? { url: process.env.REDIS_URL, maxRetriesPerRequest: null }
+  ? { url: process.env.REDIS_URL, maxRetriesPerRequest: null, family: 4 }
   : {
       host: process.env.REDIS_HOST || "redis",
       port: process.env.REDIS_PORT ? Number(process.env.REDIS_PORT) : 6379,
       password: process.env.REDIS_PASSWORD || undefined,
       maxRetriesPerRequest: null,
+      family: 4,
     };
 const publisher = new Redis(redisConfig);
 const subscriber = new Redis(redisConfig);
