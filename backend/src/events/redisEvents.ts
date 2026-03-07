@@ -3,8 +3,8 @@ import Redis from "ioredis";
 import { redisOptions } from "../queues/redisOption";
 
 // Create separate Redis connections for pub/sub
-const publisher = new Redis(redisOptions);
-const subscriber = new Redis(redisOptions);
+const publisher = new Redis(redisOptions as string | RedisOptions);
+const subscriber = new Redis(redisOptions as string | RedisOptions);
 
 export class RedisEventEmitter {
   private subscriber: Redis;

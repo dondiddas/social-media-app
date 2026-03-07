@@ -70,7 +70,7 @@ async function processJob(job: Job) {
 
 // Create worker instance
 const messageWorker = new Worker(QUEUE_NAME, processJob, {
-  connection: redisOptions,
+      connection: redisOptions as string | RedisOptions,
   concurrency: 10, // Process 10 jobs simultaneously
   limiter: {
     max: 100, // Max 100 jobs per duration
