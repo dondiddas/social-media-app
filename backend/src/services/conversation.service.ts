@@ -1,9 +1,9 @@
-// import mongoose from "mongoose";
+import mongoose from "mongoose";
 import { Conversation, IConversation } from "../models/conversationModel";
-// import { messageService } from "./message.service";
-// import { IMessage } from "../models/messageModel";
-// import { ReqAuth, searchConversation } from "../controllers/convoController";
-// import { IUser } from "../models/userModel";
+import { messageService } from "./message.service";
+import { IMessage } from "../models/messageModel";
+import { ReqAuth } from "../controllers/convoController";
+import { IUser } from "../models/userModel";
 // import { messageHanlder } from "../server";
 // import { errThrower } from "./errHandler";
 

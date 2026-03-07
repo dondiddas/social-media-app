@@ -1,9 +1,9 @@
-// import mongoose, { ObjectId } from "mongoose";
-import { Conversation } from "../models/conversationModel";
-// import { contactService } from "./contact.service";
+import mongoose from "mongoose";
+import { Conversation, IConversation } from "../models/conversationModel";
+import { contactService } from "./contact.service";
 import { ConvoService } from "./conversation.service";
-// import { messageService } from "./message.service";
-// import { IMessage } from "../models/messageModel";
+import { messageService } from "./message.service";
+import { IMessage } from "../models/messageModel";
 
 export interface ChatRelationPayload {
   payload: {
