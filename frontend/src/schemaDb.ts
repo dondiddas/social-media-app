@@ -1,21 +1,18 @@
-
 import mongoose from "mongoose";
 
-
+// --- Post Schema ---
 const postSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   content: { type: String, required: true },
   image: { type: String, default: "" },
   likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-  comments: [
-
-  ],
+  comments: [],
   createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("Post", postSchema);
+export const Post = mongoose.models.Post || mongoose.model("Post", postSchema);
 
-
+// --- Notification Schema ---
 const notificationSchema = new mongoose.Schema({
   receiver: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   sender: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
@@ -30,12 +27,9 @@ const notificationSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("Notification", notificationSchema);
+export const Notification = mongoose.models.Notification || mongoose.model("Notification", notificationSchema);
 
-
-
-
-
+// --- Message Schema ---
 const messageSchema = new mongoose.Schema({
   sender: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   receiver: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
@@ -44,15 +38,13 @@ const messageSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("Message", messageSchema);
+export const Message = mongoose.models.Message || mongoose.model("Message", messageSchema);
 
-
-const mongoose = require("mongoose");
-
+// --- Feed Schema ---
 const feedSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }], // List of posts in the feed
+  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
   lastUpdated: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("Feed", feedSchema);
+export const Feed = mongoose.models.Feed || mongoose.model("Feed", feedSchema);
