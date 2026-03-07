@@ -1,3 +1,4 @@
+import { errThrower } from "./errHandler";
 import mongoose from "mongoose";
 import { Conversation, IConversation } from "../models/conversationModel";
 import { messageService } from "./message.service";

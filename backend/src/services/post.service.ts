@@ -1,6 +1,6 @@
 import "../models/userModel";
-import postModel from "../models/postModel";
-import { errorLog } from "./errHandler";
+import postModel, { IPost } from "../models/postModel";
+import { errorLog, errThrower } from "./errHandler";
 import mongoose, { ClientSession, ObjectId } from "mongoose";
 import { ExtentRequest } from "../controllers/postController";
 import { IUser } from "../models/userModel";
