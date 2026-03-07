@@ -35,4 +35,5 @@ const notificationModel = model<INotification>(
   "Notification",
   notificationSchema
 );
+export { INotification };
 export default notificationModel;
