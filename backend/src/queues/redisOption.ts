@@ -9,5 +9,7 @@ export const redisOptions: RedisOptions | string =
     password: process.env.REDIS_PASSWORD || undefined,
     maxRetriesPerRequest: null,
   };
-//Use "redis" as the host because it's the service name from Docker Compose.
+
+
+//Use "redis" as the host because it's the servi//rece name from Docker Compose.
 // It acts as the hostname within the Docker network.
