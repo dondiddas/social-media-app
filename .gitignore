@@ -1,0 +1,58 @@
+# Node modules
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.*
+backend/.env
+frontend/.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Docker
+**/mongo-data/
+**/redis-data/
+
+# Uploads and local storage
+backend/uploads/
+frontend/public/uploads/
+
+# Misc
+*.local
+coverage/
+
+# Ignore frontend build
+frontend/dist/
+
+# Ignore backend build
+backend/dist/
+
+# Ignore drawio autosave
+*.drawio~
+
+# Ignore test output
+*.test-results.json
+
+# Ignore package-lock and yarn.lock if you use only one
+# package-lock.json
+# yarn.lock

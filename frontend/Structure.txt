@@ -1,0 +1,83 @@
+
+src/──────ModalContext
+│
+├── assets/                # Static assets like images, fonts, etc.
+│   ├── images/            # Profile images, logos, etc.
+│   ├── styles/            # Global CSS/SCSS styles
+│   └── theme.ts           # Theme and color definitions (optional)
+│
+├── components/            # Reusable UI components
+│   ├── Button.tsx         # Custom button component
+│   ├── Modal──────this is a folder and all of my model like notif model is here etch...
+│   ├── Navbar.tsx         # Top navigation bar
+│   └── Notification.tsx   # Real-time notification component
+│
+├── features/              # Feature-specific components and logic
+│   ├── auth/              # Authentication components and logic
+│   │   ├── Login.tsx
+│   │   ├── Register.tsx
+│   │   └── authSlice.ts   # Redux slice for authentication
+│   │
+│   ├── posts/             # Post-related components and logic
+│   │   ├── Post.tsx       # Individual post component
+│   │   ├── PostList.tsx   # Component to display a list of posts
+│   │   ├── ViewPost.txs   # View the lates post by the followed user
+│   │   └── postsSlice.ts  # Redux slice for post-related state
+│   │
+│   ├── users/             # User-related components and logic
+│   │   ├── Profile.tsx    # User profile page
+│   │   ├── UserCard.tsx   # Small user profile card for followers/following
+│   │   ├── PhotoGallery.tsx 
+│   │   ├── usersSlice.ts  # Redux slice for user-related state
+|   |   └──selector.ts      # For fetching the current user data
+│   │
+│   ├── notifications/     # Real-time notifications
+│   │   ├── NotificationItem.tsx
+│   │   └── notificationsSlice.ts
+│   │
+│   └── messenger/         # Messenger/chat components and logic
+│       ├── ChatWindow.tsx        # Main chat interface
+│       ├── MessageItem.tsx       # Individual message bubble component
+│       ├── ChatList.tsx          # List of conversations
+│       ├── NewMessageForm.tsx    # Form to send new messages
+│       └── messengerSlice.ts     # Redux slice for chat-related state
+│
+├── hooks/                 # Custom React hooks
+│   ├── useAuth.ts         # Hook for authentication logic
+│   ├── useFetch.ts        # Hook for data fetching
+│   ├── useSocket.ts       # Hook for managing Socket.io events
+│   └── useMessenger.ts    # Hook for handling chat-specific logic
+│
+├── layouts/               # Layouts for the app
+│   ├── MainLayout.tsx     # Default layout for authenticated users
+│   └── AuthLayout.tsx     # Layout for login/register pages
+│
+├── pages/                 # Main pages for the app
+│   ├── Feed.tsx           # Main feed page
+│   ├── Profile.tsx        # User profile page
+│   ├── Login.tsx          # Login page
+│   ├── Register.tsx       # Register 
+│   ├── Messenger.tsx      # Messenger page
+│   └── NotFound.tsx       # 404 error page
+│
+├── store/                 # Redux store configuration
+│   ├── store.ts           # Store setup with middleware
+│   └── rootReducer.ts     # Combines all feature slices
+│
+├── types/                 # Global TypeScript types and interfaces
+│   ├── Post.ts            # Type definitions for posts
+│   ├── User.ts            # Type definitions for users
+│   ├── Notification.ts    # Type definitions for notifications
+│   └── Message.ts         # Type definitions for chat messages
+│
+├── utils/                 # Utility functions
+│   ├── api.ts             # Axios instance and API calls
+│   ├── formatDate.ts      # Utility for formatting dates
+│   ├── formatMessage.ts   # Utility for formatting chat messages
+│   └── validators.ts      # Validation functions (e.g., email validation)
+│
+├── App.tsx                # Root component
+├── index.tsx              # React DOM rendering
+├── react-app-env.d.ts     # TypeScript definitions for React scripts
+├── vite-env.d.ts          # Vite TypeScript environment definitions
+└── tsconfig.json          # TypeScript configuration
