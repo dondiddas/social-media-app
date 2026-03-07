@@ -1,19 +1,3 @@
-posconst mongoose = require("mongoose");
-
-const userSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true }, // hashed
-  profilePicture: { type: String, default: "" }, // URL to profile picture
-  bio: { type: String, maxLength: 160 }, // Optional bio
-  followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // Followers
-  following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // Following
-  createdAt: { type: Date, default: Date.now },
-});
-
-module.exports = mongoose.model("User", userSchema);
-
-
 
 const mongoose = require("mongoose");
 

@@ -218,7 +218,7 @@ const EditPostModal: React.FC<EditPostProp> = ({ postId, show, onClose }) => {
                               postInputData.image && isValidUrl(photoUrl!)
                                 ? `url(${photoUrl})`
                                 : `url(${encodeURI(
-                                    `http://localhost:4000/images/posts/${postInputData.user}/${postInputData.image}`
+                                    `${import.meta.env.VITE_API_URL || "http://localhost:4000"}/images/posts/${postInputData.user}/${postInputData.image}`
                                   )})`
                             }`,
                           }}
