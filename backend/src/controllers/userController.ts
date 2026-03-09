@@ -162,21 +162,8 @@ export const login = async (req: Request, res: Response): Promise<any> => {
     console.log(error);
     return res.json({ success: false, message: "Error" });
   }
+
 };
-
-  req: ExtendReq,
-  res: Response,
-): Promise<any> => {
-  try {
-    const userId = req.userId;
-    const newProfileImage = req.file;
-    const { fullName, bio } = req.body;
-
-    const updatedData: {
-      fullName: string;
-      bio: string;
-      profilePicture?: string;
-    } = { fullName, bio };
 
     if (!userId) return res.json({ success: false, message: "Unauthorized" });
 
