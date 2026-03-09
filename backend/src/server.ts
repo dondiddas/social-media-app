@@ -31,8 +31,8 @@ const PORT = 4000;
 app.use(express.json());
 
 // Global error handler for JSON parse errors
-app.use((err, req, res, next) => {
-  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  if (err instanceof SyntaxError && (err as any).status === 400 && 'body' in err) {
     console.error('Invalid JSON:', err);
     return res.status(400).json({ success: false, message: 'Invalid JSON payload' });
   }
