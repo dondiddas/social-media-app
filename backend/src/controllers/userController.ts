@@ -119,11 +119,12 @@ export const fetchCurrentUser = async (
     const currentUser = await UserModel.findById(userId);
 
     res.json({ success: true, user: currentUser });
+
   } catch (error) {
     console.log(error);
     return res.json({ success: false, message: "Error" });
   }
-};
+}
 
 export const fetchAllUsers = async (
   _: ExtendReq,
