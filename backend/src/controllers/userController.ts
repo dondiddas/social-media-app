@@ -205,7 +205,7 @@ export const login = async (req: Request, res: Response): Promise<any> => {
     console.log("updating profile error: ", error);
     return res.json({ success: false, message: "Error" });
   }
-};
+}
 
 export const authorization = async (
   req: ExtendReq,
