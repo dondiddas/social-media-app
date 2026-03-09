@@ -166,15 +166,21 @@ export const login = async (req: Request, res: Response): Promise<any> => {
 
 };
 
+
+// Update user profile
+export const updateProfile = async (req: ExtendReq, res: Response): Promise<any> => {
+  try {
+    const userId = req.userId;
     if (!userId) return res.json({ success: false, message: "Unauthorized" });
 
+    const updatedData: any = { ...req.body };
     // S3 upload for new profile image
-    if (newProfileImage) {
+    if (req.file) {
       try {
         const result = await uploadToS3Wrapper(
-          newProfileImage.buffer,
+          req.file.buffer,
           "social-media/profile",
-          newProfileImage.mimetype
+          req.file.mimetype
         );
         updatedData.profilePicture = result.url;
         console.log("Profile image uploaded to S3:", result.url);
@@ -185,47 +191,22 @@ export const login = async (req: Request, res: Response): Promise<any> => {
     }
 
     const updatedUser = await UserModel.findByIdAndUpdate(
-      req.userId,
-      {
-        $set: updatedData,
-      },
+      userId,
+      { $set: updatedData },
       { new: true },
     );
 
     if (!updatedUser) {
-      return res.json({ success: false, message: "user Not Found" });
+      return res.json({ success: false, message: "User Not Found" });
     }
 
     res.json({
       success: true,
       user: updatedUser,
-      message: "User succesfully updated",
+      message: "User successfully updated",
     });
   } catch (error) {
     console.log("updating profile error: ", error);
-    return res.json({ success: false, message: "Error" });
-  }
-}
-
-export const authorization = async (
-  req: ExtendReq,
-  res: Response,
-): Promise<any> => {
-  try {
-    const userId = req.userId;
-    if (!userId) {
-      return res.json({
-        success: false,
-        message: "Unauthorize",
-      });
-    }
-
-    res.json({
-      success: true,
-      message: "authenticated",
-    });
-  } catch (error) {
-    console.log(error);
     return res.json({ success: false, message: "Error" });
   }
 };
