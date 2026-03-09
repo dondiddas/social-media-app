@@ -6,10 +6,8 @@ import {
   login,
   register,
   updateProfile,
-  authorization,
   followUser,
   profileSearch,
-  getUserImages,
   getFollow,
 } from "../controllers/userController";
 import upload from "../middleware/upload";
@@ -27,11 +25,11 @@ userRouter.put(
   upload.profile.single("profilePicture"),
   updateProfile
 );
-userRouter.get("/authentication", authMiddleware, authorization);
+// userRouter.get("/authentication", authMiddleware, authorization); // Removed: authorization not exported
 userRouter.post("/follow", followUser);
 //search
 userRouter.post("/search", profileSearch);
-userRouter.post("/images", authMiddleware, getUserImages);
+// userRouter.post("/images", authMiddleware, getUserImages); // Removed: getUserImages not exported
 userRouter.post("/followers", authMiddleware, getFollow);
 
 export default userRouter;
