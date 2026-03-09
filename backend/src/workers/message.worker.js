@@ -12,9 +12,10 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 
 // Use environment variable for Upstash Redis URL
 const redisUrl = process.env.REDIS_URL;
-const messageWorker = new Worker(
-  'messageQueue',
-  async (job) => {
+
+async function processJobWithRetry(job, maxRetries = 3) {
+  let attempt = 0;
+  while (attempt < maxRetries) {
     try {
       const { messagePayload, convoId } = job.data;
       const message = await MessageModel.create(messagePayload);
@@ -27,15 +28,34 @@ const messageWorker = new Worker(
       );
       await emitMessageOnSend({ conversation, messageData: message });
       console.log('Job done:', job.id);
+      return; // Success!
     } catch (err) {
+      if (
+        err.code === 112 || // WriteConflict
+        (err.errorLabels && err.errorLabels.includes('TransientTransactionError'))
+      ) {
+        attempt++;
+        if (attempt < maxRetries) {
+          console.warn(`Write conflict, retrying job ${job.id} (attempt ${attempt})`);
+          await new Promise(res => setTimeout(res, 100 * attempt)); // backoff
+          continue;
+        }
+      }
       console.error('Job failed:', job.id, err);
       throw err;
     }
+  }
+}
+
+const messageWorker = new Worker(
+  'messageQueue',
+  async (job) => {
+    await processJobWithRetry(job);
   },
   {
     connection: {
       ...redisOptions,
-      host: undefined, 
+      host: undefined,
       url: redisUrl,
     },
   }
