@@ -164,7 +164,6 @@ export const login = async (req: Request, res: Response): Promise<any> => {
   }
 };
 
-export const updateProfile = async (
   req: ExtendReq,
   res: Response,
 ): Promise<any> => {
@@ -181,28 +180,28 @@ export const updateProfile = async (
 
     if (!userId) return res.json({ success: false, message: "Unauthorized" });
 
-    // Check if there is attached file, if so save to servere and set as a newProfile
+    // S3 upload for new profile image
     if (newProfileImage) {
-      console.log(newProfileImage);
-
-      const fileName = `${generateNameSuffix()}${newProfileImage.originalname}`;
-      const uploadPath = path.join("uploads", "profile", userId.toString());
-
-      await fs.promises.mkdir(uploadPath, { recursive: true }); // Creates the upload path deriectory if it doesn't Exist
-
-      const filePath = path.join(uploadPath, fileName);
-
-      await fs.promises.writeFile(filePath, newProfileImage.buffer);
-
-      updatedData.profilePicture = fileName;
+      try {
+        const result = await uploadToS3Wrapper(
+          newProfileImage.buffer,
+          "social-media/profile",
+          newProfileImage.mimetype
+        );
+        updatedData.profilePicture = result.url;
+        console.log("Profile image uploaded to S3:", result.url);
+      } catch (error) {
+        console.error("Profile image S3 upload error:", error);
+        return res.status(500).json({ success: false, message: "Profile image upload failed" });
+      }
     }
 
     const updatedUser = await UserModel.findByIdAndUpdate(
       req.userId,
       {
-        $set: updatedData, //$set to update specific fields
+        $set: updatedData,
       },
-      { new: true }, // return the updated document
+      { new: true },
     );
 
     if (!updatedUser) {
@@ -353,31 +352,7 @@ export const profileSearch = async (
   }
 };
 
-export const getUserImages = async (
-  req: Request,
-  res: Response,
-): Promise<any> => {
-  try {
-    const { path, userId } = req.body;
-
-    const baseUrl = `http://${req.get("host")}`;
-
-    if (!userId) {
-      throw new Error("No user id to proccess this request");
-    }
-
-    const images = await getImages(userId, baseUrl);
-
-    res.json({
-      success: true,
-      message: "Image succesfully fetched",
-      images,
-    });
-  } catch (error) {
-    console.error("Failed to fetch  images " + error);
-    return res.json({ success: false, message: "Error" });
-  }
-};
+// getUserImages removed: now handled by S3 URLs
 
 export const getFollow = async (req: Request, res: Response): Promise<any> => {
   try {
