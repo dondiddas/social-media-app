@@ -3,10 +3,7 @@ import bcrypt from "bcryptjs";
 import validator from "validator";
 import UserModel from "../models/userModel";
 
-import path from "path";
-import fs from "fs";
-
-import { generateNameSuffix, getImages } from "../middleware/upload";
+import { uploadToS3Wrapper, generateNameSuffix } from "../middleware/upload";
 import {
   ChatRelationPayload,
   UserChatRelationService,
@@ -65,21 +62,26 @@ export const register = async (req: Request, res: Response): Promise<any> => {
 
     const userId = newUser._id.toString(); // Ensure userId is a string
 
-    const uploadPath = path.join("uploads", "profile", userId);
-    fs.mkdirSync(uploadPath, { recursive: true }); // Creates the upload path deriectory if it doesn't Exist
-
     if (req.file) {
-      const fileName = `${generateNameSuffix()}${req.file.originalname}`;
-
-      const filePath = path.join(uploadPath, fileName);
-      await fs.promises.writeFile(filePath, req.file.buffer); // Save the file from to memory disk
-
-      newUser.profilePicture = fileName;
+      try {
+        const result = await uploadToS3Wrapper(
+          req.file.buffer,
+          "social-media/profile",
+          req.file.mimetype
+        );
+        newUser.profilePicture = result.url;
+        console.log("Profile image uploaded to S3:", result.url);
+      } catch (error) {
+        console.error("Profile image S3 upload error:", error);
+        return res.status(500).json({ success: false, message: "Profile image upload failed" });
+      }
     }
 
       try {
         await newUser.save();
+        console.log("User saved to DB:", newUser);
       } catch (err: any) {
+        console.error("User save error:", err);
         if (err.code === 11000 && err.keyPattern && err.keyPattern.username) {
           return res.status(400).json({
             success: false,
