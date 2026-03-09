@@ -189,6 +189,17 @@ export class MessageHanlder {
     }
   }
 
+  /**
+   * Broadcasts a new message to all participants in the conversation room
+   * Called when a message is sent and the Redis event is received
+   */
+  public sentMessageGlobal(data: { conversation: IConversation; messageData: IMessage }) {
+    const { conversation, messageData } = data;
+    // Emit to all sockets in the conversation room
+    this.io.to(conversation._id.toString()).emit("message_on_sent", { conversation, messageData });
+    console.log("[Socket] Emitted message_on_sent to room:", conversation._id);
+  }
+
   public sentMessageGlobal(data: {
     conversation: IConversation;
     messageData: IMessage;
