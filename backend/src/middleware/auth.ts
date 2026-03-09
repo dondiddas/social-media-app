@@ -23,12 +23,15 @@ const authMiddleware = async (
       process.env.ACCESS_SECRET as string
     ) as { userId: string };
 
-    req.userId = token_decode.userId; // Attach the user's ID to the request body
-
-    next(); // Pass control to the route handler functions
+    req.userId = token_decode.userId;
+    next();
   } catch (error) {
-    console.error("Error decoding token:", error);
-    res.status(401).json({ success: false, message: "Token-expired" });
+    if (error.name === "TokenExpiredError") {
+      console.error("Token expired:", error);
+      return res.status(401).json({ success: false, message: "Token expired" });
+    }
+    console.error("JWT error:", error);
+    return res.status(401).json({ success: false, message: "Invalid token" });
   }
 };
 
