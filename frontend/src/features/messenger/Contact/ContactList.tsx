@@ -124,10 +124,11 @@ const ContactList = ({
                 }
               >
                 <img
-                  src={userProfile(
-                    contactData.user.profilePicture!,
-                    contactData.user._id
-                  )}
+                  src={
+                    contactData.user.profilePicture && contactData.user.profilePicture.startsWith("http")
+                      ? contactData.user.profilePicture
+                      : userProfile(contactData.user.profilePicture!, contactData.user._id)
+                  }
                 />
                 <div className="contact-name">{userName}</div>
               </div>

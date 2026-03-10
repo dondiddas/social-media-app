@@ -173,10 +173,11 @@ const Post = ({ post }: Post) => {
           <div className="profile-name">
             <div className="avatar">
               <img
-                src={userProfile(
-                  postOwnerData.profilePicture,
-                  postOwnerData._id
-                )}
+                src={
+                  postOwnerData.profilePicture && postOwnerData.profilePicture.startsWith("http")
+                    ? postOwnerData.profilePicture
+                    : userProfile(postOwnerData.profilePicture, postOwnerData._id)
+                }
                 style={{ cursor: "pointer" }}
                 onClick={viewPostOwnerProf}
               />

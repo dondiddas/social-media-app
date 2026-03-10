@@ -231,10 +231,11 @@ const MessageBox = ({ ChatWindowData, currentUserData }: MessageBoxProp) => {
         <>
           <div className="chatwindow-header">
             <img
-              src={userProfile(
-                conversation.participant.profilePicture!,
-                conversation.participant._id
-              )}
+              src={
+                conversation.participant.profilePicture && conversation.participant.profilePicture.startsWith("http")
+                  ? conversation.participant.profilePicture
+                  : userProfile(conversation.participant.profilePicture!, conversation.participant._id)
+              }
               alt=""
               className="chatwindow-profile"
             />
