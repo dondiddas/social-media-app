@@ -95,7 +95,13 @@ const Profile: React.FC<ProfileProp> = ({ data }) => {
   return (
     <>
       <div className="profile-main">
-        <img src={userProfile(data.profilePicture, data._id)} alt="" />
+        <img
+          src={
+            data.profilePicture && data.profilePicture.startsWith("http")
+              ? data.profilePicture
+              : userProfile(data.profilePicture, data._id)
+          }
+          alt="" />
         <div className="profile-info">
           <h1>{data.fullName}</h1>
           <div
