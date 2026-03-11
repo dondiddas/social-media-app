@@ -13,6 +13,41 @@ services:
       - redis
     restart: unless-stopped
 
+  comment-worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.worker
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - redis
+      - mongodb
+    restart: always
+
+  message-worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.worker
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - redis
+      - mongodb
+    restart: always
+    command: ["sh", "-c", "npm run build && node dist/workers/message.worker.js"]
+
+  like-worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.worker
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - redis
+      - mongodb
+    restart: always
+    command: ["sh", "-c", "npm run build && node dist/workers/like.worker.js"]
+
   mongodb:
     image: mongo
     container_name: mongodb-social
