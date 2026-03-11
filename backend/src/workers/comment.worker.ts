@@ -22,9 +22,11 @@ new Worker(
   async (job) => {
     try {
       const payload = job.data as JobPayload;
-
+      console.log("[Comment Worker] Processing payload:", payload);
       await commentService.createComment(payload);
+      console.log("[Comment Worker] Comment saved successfully.");
     } catch (error) {
+      console.error("[Comment Worker] Error:", error);
       errorLog("commentQueue-worker", error as Error);
     }
   },
